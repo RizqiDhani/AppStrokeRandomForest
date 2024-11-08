@@ -139,34 +139,42 @@ def main():
             # Mendapatkan input dari pengguna
             col1, col2 = st.columns(2)
             input_data_dict = {}
-            with col1:
+            with col1: 
                 if 'gender' in features:
-                    gender = st.radio('Jenis Kelamin', (1, 0))
-                    st.write('Anda memilih:', 'Perempuan' if gender == 1 else 'Laki-Laki')
+                    gender = st.radio('Jenis Kelamin', ('perempuan', 'laki-laki'))
+                    
+                    # Convert gender to numeric
+                    gender_numeric = 0 if gender == 'perempuan' else 1
+                    
+                    st.write('Anda memilih:', 'Perempuan (Female)' if gender_numeric == 0 else 'Laki-Laki (Male)')
                 else:
-                    gender = 0  # Placeholder jika fitur tidak dipilih
-                input_data_dict['gender'] = gender
+                    gender_numeric = 0  # Placeholder if the feature is not selected
+                
+                input_data_dict['gender'] = gender_numeric
 
                 if 'hypertension' in features:
-                    hypertension = st.radio('Hypertension', (1, 0))
-                    st.write('Anda memilih:', 'Yes' if hypertension == 1 else 'No')
+                    hypertension = st.radio('Hypertension (Hipertensi)', ('Yes (Ya)', 'No (Tidak)'))
+                    hypertension_numeric = 1 if hypertension == 'Yes (Ya)' else 0
+                    st.write('Anda memilih:', hypertension)
                 else:
-                    hypertension = 0
-                input_data_dict['hypertension'] = hypertension
+                    hypertension_numeric = 0
+                input_data_dict['hypertension'] = hypertension_numeric
 
                 if 'ever_married' in features:
-                    ever_married = st.radio('Pernah Menikah', (1, 0))
-                    st.write('Anda memilih:', 'Yes' if ever_married == 1 else 'No')
+                    ever_married = st.radio('Pernah Menikah (Ever Married)', ('Yes (Ya)', 'No (Tidak)'))
+                    ever_married_numeric = 1 if ever_married == 'Yes (Ya)' else 0
+                    st.write('Anda memilih:', ever_married)
                 else:
-                    ever_married = 0
-                input_data_dict['ever_married'] = ever_married
+                    ever_married_numeric = 0
+                input_data_dict['ever_married'] = ever_married_numeric
 
                 if 'Residence_type' in features:
-                    Residence_type = st.radio('Tipe Tempat Tinggal', (1, 0))
-                    st.write('Anda memilih:', 'Urban (Perkotaan)' if Residence_type == 1 else 'Rural (Pedesaan)')
+                    Residence_type = st.radio('Tipe Tempat Tinggal (Residence Type)', ('Urban (Perkotaan)', 'Rural (Pedesaan)'))
+                    Residence_type_numeric = 1 if Residence_type == 'Urban (Perkotaan)' else 0
+                    st.write('Anda memilih:', Residence_type)
                 else:
-                    Residence_type = 0
-                input_data_dict['Residence_type'] = Residence_type
+                    Residence_type_numeric = 0
+                input_data_dict['Residence_type'] = Residence_type_numeric
 
                 if 'bmi' in features:
                     bmi = st.number_input('BMI')
@@ -176,37 +184,42 @@ def main():
 
             with col2:
                 if 'age' in features:
-                    age = st.number_input('Umur', min_value=0.0)
+                    age = st.number_input('Age (Umur)', min_value=0.0)
                 else:
                     age = 0
                 input_data_dict['age'] = age
 
                 if 'heart_disease' in features:
-                    heart_disease = st.radio('Penyakit Jantung', (1, 0))
-                    st.write('Anda memilih:', 'Yes' if heart_disease == 1 else 'No')
+                    heart_disease = st.radio('Heart Disease (Penyakit Jantung)', ('Yes (Ya)', 'No (Tidak)'))
+                    heart_disease_numeric = 1 if heart_disease == 'Yes (Ya)' else 0
+                    st.write('Anda memilih:', heart_disease)
                 else:
-                    heart_disease = 0
-                input_data_dict['heart_disease'] = heart_disease
+                    heart_disease_numeric = 0
+                input_data_dict['heart_disease'] = heart_disease_numeric
 
                 if 'work_type' in features:
-                    work_type = st.radio('Jenis Pekerjaan', (0, 1, 2, 3))
-                    st.write('Anda memilih:', ['Private (Pribadi)', 'Govt Job (Pekerjaan Pemerintah)', 'Self-employed (Wiraswasta)', 'Children (Anak-anak)'][work_type])
+                    work_type = st.radio('Work Type (Jenis Pekerjaan)', ('Private (Pribadi)', 'Govt Job (Pekerjaan Pemerintah)', 'Self-employed (Wiraswasta)', 'Children (Anak-anak)'))
+                    work_type_numeric = ['Private (Pribadi)', 'Govt Job (Pekerjaan Pemerintah)', 'Self-employed (Wiraswasta)', 'Children (Anak-anak)'].index(work_type)
+                    st.write('Anda memilih:', work_type)
                 else:
-                    work_type = 0
-                input_data_dict['work_type'] = work_type
+                    work_type_numeric = 0
+                input_data_dict['work_type'] = work_type_numeric
 
                 if 'avg_glucose_level' in features:
-                    avg_glucose_level = st.number_input('Input Nilai AVG Glucose Level')
+                    avg_glucose_level = st.number_input('Avg Glucose Level (Rata-rata Glukosa)')
                 else:
                     avg_glucose_level = 0
                 input_data_dict['avg_glucose_level'] = avg_glucose_level
 
                 if 'smoking_status' in features:
-                    smoking_status = st.radio('Status Merokok', (0, 1, 2, 3))
-                    st.write('Anda memilih:', ['Never Smoked (Tidak Pernah Merokok)', 'Formerly Smoked (Sebelumnya Merokok)', 'Smokes (Merokok)', 'Unknown (Tidak Kenal)'][smoking_status])
+                    smoking_status = st.radio('Smoking Status (Status Merokok)', ('Never Smoked (Tidak Pernah Merokok)', 'Formerly Smoked (Sebelumnya Merokok)', 'Smokes (Merokok)', 'Unknown (Tidak Diketahui)'))
+                    smoking_status_numeric = ['Never Smoked (Tidak Pernah Merokok)', 'Formerly Smoked (Sebelumnya Merokok)', 'Smokes (Merokok)', 'Unknown (Tidak Diketahui)'].index(smoking_status)
+                    st.write('Anda memilih:', smoking_status)
                 else:
-                    smoking_status = 0
-                input_data_dict['smoking_status'] = smoking_status
+                    smoking_status_numeric = 0
+                input_data_dict['smoking_status'] = smoking_status_numeric
+
+
 
             # Mengonversi input menjadi format yang dapat digunakan model
         if st.button('Test Prediksi Stroke'):
